@@ -40,7 +40,7 @@ open class AKImageCropperView: UIView, UIScrollViewDelegate, UIGestureRecognizer
     fileprivate var reversedRect: CGRect {
         return CGRect(
             origin  : .zero,
-            size    : ((angle / M_PI_2).truncatingRemainder(dividingBy: 2)) == 1
+            size    : ((abs(angle) / (.pi/2)).truncatingRemainder(dividingBy: 2)) == 1
                 ? CGSize(width: frame.size.height, height: frame.size.width)
                 : frame.size)
     }
@@ -52,19 +52,19 @@ open class AKImageCropperView: UIView, UIScrollViewDelegate, UIGestureRecognizer
         var newEdgeInsets: UIEdgeInsets
         
         switch angle {
-        case M_PI_2:
+        case .pi/2, -(.pi/2 * 3):
             newEdgeInsets = UIEdgeInsetsMake(
                 minEdgeInsets.right,
                 minEdgeInsets.top,
                 minEdgeInsets.left,
                 minEdgeInsets.bottom)
-        case M_PI:
+        case .pi, -.pi:
             newEdgeInsets = UIEdgeInsetsMake(
                 minEdgeInsets.bottom,
                 minEdgeInsets.right,
                 minEdgeInsets.top,
                 minEdgeInsets.left)
-        case M_PI_2 * 3:
+        case .pi/2 * 3, -(.pi/2):
             newEdgeInsets = UIEdgeInsetsMake(
                 minEdgeInsets.left,
                 minEdgeInsets.bottom,
